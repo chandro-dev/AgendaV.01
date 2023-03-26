@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -175,12 +174,9 @@ namespace Presentacion
             ConsoleKeyInfo aux_2 = new ConsoleKeyInfo();
             string key = string.Empty;
             Console.Clear();
-
-            
             if (servicioContactoFamiliar.GetAll() == null)
             {
                 Console.SetCursorPosition(30, 6); Console.WriteLine("No hay contactos que mostrar");
-
             }
             else
             {
@@ -191,33 +187,31 @@ namespace Presentacion
                 do
                 {
                 if (char.IsNumber(aux_2.KeyChar))
-                    {
-
-                            if (servicioContactoFamiliar.GetByPhone(key) == null)
+                {  
+                    if (servicioContactoFamiliar.GetByPhone(key) == null)
+                        {
+                            Console.Clear();
+                            if (key.ToString() == "" || key.ToString() == string.Empty)
                             {
-                                Console.Clear();
-                                Console.BackgroundColor = ConsoleColor.Red;
-                                if (key.ToString() == "" || key.ToString() == string.Empty)
-                                {
-                                    view_lista_all(servicioContactoFamiliar.GetAll());
-                                }
-                                Console.WriteLine("No hay contactos con este nombre.");
-                                Console.SetCursorPosition(30, 20); Console.Write("Busqueda: ");
-                                Console.SetCursorPosition(40, 20); Console.Write(key);
-                                aux_2 = Console.ReadKey(true);
-                                char aux = aux_2.KeyChar;
-                                if (char.IsNumber(aux))
-                                {
-                                    key += aux;
-                                }
-                                else
-                                {
-                                    if (aux_2.Key == ConsoleKey.Backspace && key != string.Empty)
-                                    {
-                                        key = key.Remove(key.LastIndexOf(key.Last()));
-                                    }
-                                }
+                                view_lista_all(servicioContactoFamiliar.GetAll());
+                            }
+                            Console.WriteLine("No hay contactos con este nombre.");
+                            Console.SetCursorPosition(30, 20); Console.Write("Busqueda: ");
                             Console.SetCursorPosition(40, 20); Console.Write(key);
+                            aux_2 = Console.ReadKey(true);
+                            char aux = aux_2.KeyChar;
+                            if (char.IsNumber(aux))
+                            {
+                                key += aux;
+                            }
+                            else
+                            {
+                                if (aux_2.Key == ConsoleKey.Backspace && key != string.Empty)
+                                {
+                                    key = key.Remove(key.LastIndexOf(key.Last()));
+                                }
+                            }
+                        Console.SetCursorPosition(40, 20); Console.Write(key);
 
                         }
                         else
@@ -268,7 +262,6 @@ namespace Presentacion
                             if (servicioContactoFamiliar.GetByName(key) == null)
                             {
                                 Console.Clear();
-                                Console.BackgroundColor = ConsoleColor.Red;
                                 if (key.ToString() == "" || key.ToString() == string.Empty)
                                 {
                                     view_lista_all(servicioContactoFamiliar.GetAll());
@@ -276,6 +269,7 @@ namespace Presentacion
                                 Console.WriteLine("No hay contactos con este nombre.");
                                 Console.SetCursorPosition(30, 20); Console.Write("Busqueda: ");
                                 Console.SetCursorPosition(40, 20); Console.Write(key);
+
                                 aux_2 = Console.ReadKey(true);
                                 char aux = aux_2.KeyChar;
                                 if (char.IsLetter(aux))
@@ -287,12 +281,18 @@ namespace Presentacion
                                     if (aux_2.Key == ConsoleKey.Backspace && key != string.Empty)
                                     {
                                         key = key.Remove(key.LastIndexOf(key.Last()));
+                                        try
+                                        {
+                                            view_lista_all(servicioContactoFamiliar.GetByName(key));
+                                        }
+                                        catch
+                                        {
+
+                                        }
                                         Console.SetCursorPosition(40, 20); Console.Write(key);
 
                                     }
                                 }
-                                Console.SetCursorPosition(40, 20); Console.Write(key);
-
                             }
                             else
                             {
@@ -307,13 +307,11 @@ namespace Presentacion
                                 {
                                     key += aux;
                                 }
-
                                 else
                                 {
                                     if (aux_2.Key == ConsoleKey.Backspace)
                                     {
 
-                                        Console.BackgroundColor = ConsoleColor.Yellow;
                                         key = key.Remove(key.LastIndexOf(key.Last()));
                                         Console.Clear();
                                         try
@@ -325,7 +323,7 @@ namespace Presentacion
 
                                         }
                                         Console.SetCursorPosition(30, 20); Console.Write("Busqueda: ");
-                                        Console.SetCursorPosition(40, 20); Console.Write(key);
+                                        Console.SetCursorPosition(50, 20); Console.Write(key);
                                     }
                                     else
                                     {
@@ -339,12 +337,20 @@ namespace Presentacion
                         {
                             Console.Clear();
                             Console.SetCursorPosition(30, 20); Console.Write("Busqueda: ");
+                            Console.SetCursorPosition(40, 20); Console.Write(key);
+
                             aux_2 = Console.ReadKey(true);
                             if (aux_2.Key == ConsoleKey.Backspace && key != string.Empty)
                             {
-
-                                Console.BackgroundColor = ConsoleColor.Yellow;
                                 key = key.Remove(key.LastIndexOf(key.Last()));
+                                try
+                                {
+                                    view_lista_all(servicioContactoFamiliar.GetByName(key));
+                                }
+                                catch
+                                {
+
+                                }
                             }
                             else
                             {
@@ -354,11 +360,10 @@ namespace Presentacion
 
                                 }
                             }
-                            Console.SetCursorPosition(40, 20); Console.Write(key);
                         }
 
                     }
-                
+                   
                 } while (aux_2.Key != ConsoleKey.Escape);
             }
 
