@@ -91,12 +91,8 @@ namespace Logica
         public List<ContactoFamiliar> GetByName(string name)
         {
             var result = from i in contactoFamiliars
-                where i.Nombre.Contains(name)
-                select i;
-                
-            
-            
-            
+                         where i.Nombre.Contains(name)
+                         select i;
             if (result== null) { 
             return null;
             }
