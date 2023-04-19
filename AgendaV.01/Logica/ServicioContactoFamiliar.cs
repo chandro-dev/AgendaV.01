@@ -14,6 +14,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logica
 {
@@ -68,12 +69,10 @@ namespace Logica
 
         public  bool Exist(ContactoFamiliar contacto)
         {
-            var result = from i in contactoFamiliars
-                         where i.Id == contacto.Id
-                         select i;
-            
-            if (result == null)
-            {
+            var result =  contactoFamiliars.Where(i => i.Id == contacto.Id).ToList();
+
+            if (result == null || result.Count <=0)
+            {                                                                                                                                                                                                             
                 return false;
             }
             else

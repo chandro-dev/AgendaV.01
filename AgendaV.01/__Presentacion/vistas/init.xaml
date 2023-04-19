@@ -10,13 +10,13 @@
 
     <Grid Background="White">
         <TextBox x:Name="txtNombre" HorizontalAlignment="Left" Margin="211,169,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="189" Height="21" KeyDown="KDNombre"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="269,307,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.53,0.532" Click="Button_Click" Height="24" Width="73" />
+        <Button x:Name="btnGuardar" Content="Guardar" HorizontalAlignment="Left" Margin="269,307,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.53,0.532" Click="Button_Click" Height="24" Width="73" />
         <Label Content="Telefono" HorizontalAlignment="Left" Margin="211,57,0,0" VerticalAlignment="Top" Height="33" Width="87"/>
         <Label Content="Nombre" HorizontalAlignment="Left" Margin="211,137,0,0" VerticalAlignment="Top" Height="32" Width="85"/>
-        <DataGrid x:Name="Datos" Margin="467,58,50,112" IsReadOnly="True" SelectionChanged="Datos_SelectionChanged"/>
+        <DataGrid x:Name="Datos" Margin="467,58,28,112" IsReadOnly="True" SelectionChanged="Datos_SelectionChanged"/>
         <TextBox Name="txtTelefono" HorizontalAlignment="Left" Margin="211,95,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="189" Height="21" KeyDown="KDTelefono"/>
-        <Button Content="Actualizar" HorizontalAlignment="Left" Margin="198,309,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
-        <Button Content="Eliminar" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button x:Name="btnActualizar" Content="Actualizar" HorizontalAlignment="Left" Margin="198,309,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
+        <Button x:Name="btnEliminar" Content="Eliminar" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
 
     </Grid>
 </Page>

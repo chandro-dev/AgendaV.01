@@ -33,7 +33,10 @@ namespace __Presentacion.vistas
             InitializeComponent();
             ser_contct_familiar = new ServicioContactoFamiliar();
             Datos.ItemsSource = ser_contct_familiar.GetAll();
-
+            
+            btnActualizar.IsEnabled = false;
+            btnEliminar.IsEnabled=false;
+            btnGuardar.IsEnabled = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -41,6 +44,8 @@ namespace __Presentacion.vistas
             if (!ser_contct_familiar.Exist(new ContactoFamiliar { Id = int.Parse(txtTelefono.Text.ToString()), Nombre = txtNombre.Text, Telefono = txtTelefono.Text.ToString(), FechaNacimiento = DateTime.Now })){
                 ser_contct_familiar.Add(new ContactoFamiliar { Id = int.Parse(txtTelefono.Text.ToString()), Nombre = txtNombre.Text, Telefono = txtTelefono.Text.ToString(), FechaNacimiento = DateTime.Now });
                 Datos.ItemsSource = ser_contct_familiar.GetAll();
+                txtTelefono.Text = string.Empty;
+                txtNombre.Text = string.Empty;
             }
             else
             {
@@ -50,33 +55,66 @@ namespace __Presentacion.vistas
                 
         }
         private  void KDTelefono(object sender, RoutedEventArgs e)
-        { 
-            Datos.ItemsSource= ser_contct_familiar.GetByPhone(txtTelefono.Text);    
-        }
+        {
+            btnGuardar.IsEnabled = true;
+            try
+            {
+                Datos.ItemsSource = ser_contct_familiar.GetByPhone(txtTelefono.Text);
+            }
+            catch
+            {
+            }
+            }
         private void   KDNombre(object sender, RoutedEventArgs e)
         {
-            Datos.ItemsSource =ser_contct_familiar.GetByName(txtNombre.Text);
+            if (txtNombre.Text == string.Empty || txtNombre.Text.StartsWith(" ") || txtNombre.Text.Contains(" "))
+            {
+                btnGuardar.IsEnabled = false;
+            }
+            else
+            {
+                try
+                {
+                    Datos.ItemsSource = ser_contct_familiar.GetByName(txtNombre.Text);
+                }
+                catch
+                {
+
+                }
+                btnGuardar.IsEnabled = true;
+
+            }
         }
 
         private void Datos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            btnActualizar.IsEnabled = true;
+            btnEliminar.IsEnabled = true;
+            btnGuardar.IsEnabled = false;
             
-            change_contc = (ContactoFamiliar)Datos.SelectedItem ; 
-            txtNombre.Text = change_contc.Nombre;
-            txtTelefono.Text= change_contc.Telefono;
-
+            try
+            {
+                if (Datos.SelectedItem !=null)
+                {
+                    change_contc = (ContactoFamiliar)Datos.SelectedItem;
+                    txtNombre.Text = change_contc.Nombre;
+                    txtTelefono.Text = change_contc.Telefono;
+                }
+            }
+            catch(Exception )
+            {
+                
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if(change_contc != null && ser_contct_familiar.Delete(change_contc))
-            {
-
-                    change_contc = null;
-                    Datos.ItemsSource = ser_contct_familiar.GetAll();
-
-
+            if (change_contc != null && ser_contct_familiar.Delete(change_contc)) {
+                change_contc = null;
             }
+            Datos.ItemsSource = ser_contct_familiar.GetAll();
+            txtTelefono.Text = string.Empty;
+            txtNombre.Text = string.Empty;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -88,9 +126,11 @@ namespace __Presentacion.vistas
                 if (ser_contct_familiar.Update(change_contc))
                 {
                     change_contc = null;
-                    Datos.ItemsSource = ser_contct_familiar.GetAll();
+                    txtTelefono.Text = string.Empty;
+                    txtNombre.Text = string.Empty;
                 }
             }
+            Datos.ItemsSource = ser_contct_familiar.GetAll();
 
         }
     }
