@@ -15,7 +15,7 @@ namespace Logica
         bool Delete(ContactoFamiliar contacto);
         bool Update(ContactoFamiliar contacto);
         List<ContactoFamiliar> GetByPhone(string phone);
-        List<ContactoFamiliar> GetByName(string name);
+        Task<List<ContactoFamiliar>> GetByName(string name);
         bool Exist(ContactoFamiliar contacto);
     }
 }

@@ -3,8 +3,12 @@ using Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
+using System.Data.Linq.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using System.Text;
@@ -62,14 +66,21 @@ namespace Logica
             }
         }
 
-        public bool Exist(ContactoFamiliar contacto)
+        public  bool Exist(ContactoFamiliar contacto)
         {
-            bool match = false;
-            if (contactoFamiliars.FindIndex(x => x.Id == contacto.Id) > -1) {
-                match = true;
+            var result = from i in contactoFamiliars
+                         where i.Id == contacto.Id
+                         select i;
+            
+            if (result == null)
+            {
+                return false;
             }
-            return match;
-        }
+            else
+            {
+                return true;
+            }
+            }
 
         public List<ContactoFamiliar> GetAll()
         {
@@ -80,94 +91,34 @@ namespace Logica
 
         public List<ContactoFamiliar> GetByName(string name)
         {
-
-            List<ContactoFamiliar> list_byName = new List<ContactoFamiliar>();
-            bool find = false;
-
-            foreach (var i in contactoFamiliars)
-            {
-
-                for (int w = 0; w <= name.Length; w++)
-                {
-
-                    try
-                    {
-                        if (name.ToLower()[w] == i.Nombre.ToLower()[w] && name.Length <= i.Nombre.Length)
-                        {
-                            find = true;
-
-                        }
-                        else
-                        {
-                            find = false;
-                            break;
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-                if (find)
-                {
-
-                    list_byName.Add(i);
-                    find = false;
-
-                }
+            var result = from i in contactoFamiliars
+                where i.Nombre.Contains(name)
+                select i;
+                
+            
+            
+            
+            if (result== null) { 
+            return null;
             }
-
-            if (list_byName.Count <= 0)
             {
-                return null;
+                return  result.ToList();
             }
-            return list_byName;
-
         }
 
         public List<ContactoFamiliar> GetByPhone(string phone)
         {
-            List<ContactoFamiliar> list_byPhone = new List<ContactoFamiliar>();
-            bool find = false;
-
-
-            foreach (var i in contactoFamiliars)
-            {
-
-                for (int w = 0; w <= phone.Length; w++)
-                {
-
-                    try
-                    {
-                        if (phone[w] == i.Telefono[w] && phone.Length <= i.Nombre.Length)
-                        {
-                            find = true;
-
-                        }
-                        else
-                        {
-                            find = false;
-                            break;
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-                if (find)
-                {
-
-                    list_byPhone.Add(i);
-                    find = false;
-
-                }
-            }
-
-            if (list_byPhone.Count <= 0)
+            var result = from i in contactoFamiliars
+                         where i.Telefono.Contains(phone)
+                        select i;
+            if (result == null)
             {
                 return null;
             }
-            return list_byPhone;
-
+            else
+            {
+                return result.ToList();
+            }
         }
     
         public bool Update(ContactoFamiliar contacto)
