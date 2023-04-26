@@ -17,6 +17,7 @@
         <TextBox Name="txtTelefono" HorizontalAlignment="Left" Margin="211,95,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="189" Height="21" KeyDown="KDTelefono"/>
         <Button x:Name="btnActualizar" Content="Actualizar" HorizontalAlignment="Left" Margin="198,309,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
         <Button x:Name="btnEliminar" Content="Eliminar" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="next" HorizontalAlignment="Left" Margin="423,392,0,0" VerticalAlignment="Top" Click="Button_Click_3"/>
 
     </Grid>
 </Page>

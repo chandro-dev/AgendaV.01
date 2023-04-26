@@ -133,5 +133,10 @@ namespace __Presentacion.vistas
             Datos.ItemsSource = ser_contct_familiar.GetAll();
 
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new FRE());
+        }
     }
 }

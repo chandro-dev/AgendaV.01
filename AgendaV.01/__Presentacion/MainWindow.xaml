@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:__Presentacion"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-
-    <Frame x:Name="_NavigationFrame" NavigationUIVisibility="Hidden" >
-        
-        
-    </Frame>
+    <Grid>
+        <Frame x:Name="_NavigationFrame">
+        </Frame>
+        </Grid>
 
 </Window>
